@@ -28,13 +28,15 @@ async def on_reaction_add(reaction,user):
     if (user.id != client.user.id and not user.bot): # Death to bots
         if (headcountStatus is not False): # Have we even begun?
             if (reaction.emoji == '❌'):
-                headcountStatus = False
-                await cancel_headcount(client, reaction, user)
+                if (user.permissions_in(reaction.message.channel).send_messages):
+                    headcountStatus = False
+                    await cancel_headcount(client, reaction, user)
             elif (reaction.emoji == '👍'):
                 await update_headcount(client, reaction, user)
             elif (reaction.emoji == '✅'):
-                headcountStatus = False
-                await end_headcount(client, reaction, user)
+                if (user.permissions_in(reaction.message.channel).send_messages):
+                    headcountStatus = False
+                    await end_headcount(client, reaction, user)
 
 t = open(ROOT_DIR + "/token.cfg", "r").read()
 

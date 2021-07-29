@@ -51,17 +51,15 @@ async def update_headcount(client, reaction, user):
     await reaction.message.edit(embed=embedTF2Template)
 
 async def cancel_headcount(client, reaction, user):
-    if (user.permissions_in(reaction.message.channel).send_messages):
-        await reaction.message.edit(embed=embedFailTemplate)
-        await asyncio.sleep(60)
-        await reaction.message.delete()
+    await reaction.message.edit(embed=embedFailTemplate)
+    await asyncio.sleep(60)
+    await reaction.message.delete()
 
 async def end_headcount(client, reaction, user):
-    if (user.permissions_in(reaction.message.channel).send_messages):
-        await reaction.message.delete()
-        tempEmbed = embedEndTemplate
-        tempEmbed.add_field(name="Started!", value=("We got {} users!").format(len(people)))
+    await reaction.message.delete()
+    tempEmbed = embedEndTemplate
+    tempEmbed.add_field(name="Started!", value=("We got {} users!").format(len(people)))
 
-        await reaction.message.channel.send(content=groupnotification, embed=embedEndTemplate)
-        await asyncio.sleep(300)
-        await reaction.message.delete()
+    await reaction.message.channel.send(content=groupnotification, embed=embedEndTemplate)
+    await asyncio.sleep(300)
+    await reaction.message.delete()
